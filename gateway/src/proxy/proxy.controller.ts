@@ -4,6 +4,9 @@ import axios from 'axios';
 import {AccessGuard} from "../middleware /access-guard";
 import {JwtAuthGuard} from "../middleware /jwt-auth-guard";
 
+const AUTH_SERVER_URL = process.env.AUTH_SERVER_URL || 'http://localhost:3100';
+const EVENT_SERVER_URL = process.env.EVENT_SERVER_URL || 'http://localhost:3200';
+
 @Controller(['auth', 'event'])
 export class ProxyController {
 
@@ -11,14 +14,13 @@ export class ProxyController {
     @All('*')
     async proxy(@Req() req: Request, @Res() res: Response) {
         const target =
-            req.path.startsWith('/auth') ? 'http://localhost:3100' :
-                req.path.startsWith('/event') ? 'http://localhost:3200' :
-                    null;
+            req.path.startsWith('/auth') ? AUTH_SERVER_URL :
+            req.path.startsWith('/event') ? EVENT_SERVER_URL :
+            null;
 
         if (!target) return res.status(404).send('Target not found');
 
-        const cleanedPath = req.originalUrl.replace(/^\/(auth|event)/, '');
-        const fullUrl = target + cleanedPath;
+        const fullUrl = target + req.originalUrl;
 
         try {
             const config: any = {
