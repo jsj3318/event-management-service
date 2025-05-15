@@ -2,6 +2,7 @@ import { Injectable, NestMiddleware, UnauthorizedException, ForbiddenException, 
 import { Request, Response, NextFunction } from 'express';
 import { ACCESS_RULES } from '../access-map';
 import * as jwt from 'jsonwebtoken';
+import {Role} from "../type/role.enum";
 
 @Injectable()
 export class AuthMiddleware implements NestMiddleware {
@@ -23,21 +24,24 @@ export class AuthMiddleware implements NestMiddleware {
         const token = req.headers.authorization?.split(' ')[1];
         if (!token) throw new UnauthorizedException('no token!');
 
-        try {
-            const decoded = jwt.verify(token, process.env.JWT_SECRET);
-            req['userId'] = decoded;
-
-            // ADMIN role은 통과
-            if(decoded.role === 'ADMIN') return next();
-
-            if (!matched.roles.includes(decoded.role)) {
-                throw new ForbiddenException('forbidden');
+        const decoded = (() => {
+            try {
+                return jwt.verify(token, process.env.JWT_SECRET);
+            } catch {
+                throw new UnauthorizedException('wrong token!');
             }
+        })();
 
-            next();
-        } catch (e) {
-            throw new UnauthorizedException('wrong token!');
+        req['userId'] = decoded;
+
+        // ADMIN role은 통과
+        if(decoded.role === Role.ADMIN) return next();
+
+        if (!matched.roles.includes(decoded.role)) {
+            throw new ForbiddenException('forbidden');
         }
+
+        next();
     }
 
 }
