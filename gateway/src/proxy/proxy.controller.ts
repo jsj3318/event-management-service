@@ -1,9 +1,13 @@
-import { All, Controller, Req, Res } from '@nestjs/common';
+import {All, Controller, Req, Res, UseGuards} from '@nestjs/common';
 import { Request, Response } from 'express';
 import axios from 'axios';
+import {AccessGuard} from "../middleware /access-guard";
+import {JwtAuthGuard} from "../middleware /jwt-auth-guard";
 
 @Controller(['auth', 'event'])
 export class ProxyController {
+
+    @UseGuards(JwtAuthGuard, AccessGuard)
     @All('*')
     async proxy(@Req() req: Request, @Res() res: Response) {
         const target =
@@ -35,4 +39,6 @@ export class ProxyController {
             res.status(status).json(data);
         }
     }
+
+
 }
