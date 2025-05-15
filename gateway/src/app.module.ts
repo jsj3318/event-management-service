@@ -4,7 +4,7 @@ import { AppService } from './app.service';
 import {ConfigModule} from "@nestjs/config";
 import {ProxyController} from "./proxy/proxy.controller";
 import {PassportModule} from "@nestjs/passport";
-import {JwtStrategy} from "./middleware /JwtStrategy";
+import {JwtStrategy} from "./middleware/JwtStrategy";
 
 @Module({
   imports: [

@@ -13,8 +13,5 @@ export const ACCESS_RULES = [
     { method: 'GET', path: /^\/event\/?$/, roles: [] },
 
 
-    { method: 'POST', path: /^\/event\/admin\/create$/, roles: [] },
-    { method: 'GET', path: /^\/event\/rewards$/, roles: [Role.USER] },
-
 
 ];

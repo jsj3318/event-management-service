@@ -1,8 +1,8 @@
 import {All, Controller, Req, Res, UseGuards} from '@nestjs/common';
 import { Request, Response } from 'express';
 import axios from 'axios';
-import {AccessGuard} from "../middleware /access-guard";
-import {JwtAuthGuard} from "../middleware /jwt-auth-guard";
+import {AccessGuard} from "../middleware/access-guard";
+import {JwtAuthGuard} from "../middleware/jwt-auth-guard";
 
 const AUTH_SERVER_URL = process.env.AUTH_SERVER_URL || 'http://localhost:3100';
 const EVENT_SERVER_URL = process.env.EVENT_SERVER_URL || 'http://localhost:3200';
@@ -29,7 +29,7 @@ export class ProxyController {
                 headers: { ...req.headers, host: undefined },
             };
 
-            if (!['get', 'head'].includes(req.method.toLowerCase())) {
+            if (!['GET', 'HEAD'].includes(req.method)) {
                 config.data = req.body;
             }
 
