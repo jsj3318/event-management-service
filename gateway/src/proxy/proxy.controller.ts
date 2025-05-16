@@ -23,15 +23,19 @@ export class ProxyController {
         const fullUrl = target + req.originalUrl;
 
         try {
+            const { host, ...headers } = req.headers;
+            headers['content-length'] = undefined;
             const config: any = {
                 method: req.method,
                 url: fullUrl,
-                headers: { ...req.headers, host: undefined },
+                headers,
             };
 
-            if (!['GET', 'HEAD'].includes(req.method)) {
+            if (!['GET', 'HEAD'].includes(req.method.toUpperCase())) {
                 config.data = req.body;
             }
+
+            console.log('[ProxyController] proxy', config);
 
             const response = await axios(config);
             res.status(response.status).json(response.data);

@@ -18,8 +18,6 @@ export class AccessGuard implements CanActivate {
             (rule) => rule.method === method && rule.path.test(path),
         );
 
-        console.log(matched);
-
         // 룰 없으면 404
         if (!matched) {
             throw new NotFoundException('요청 경로가 존재하지 않습니다');
