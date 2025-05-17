@@ -1,14 +1,19 @@
-import { Injectable, ConflictException } from '@nestjs/common';
+import { Injectable, ConflictException, UnauthorizedException } from '@nestjs/common';
 import {InjectModel} from "@nestjs/mongoose";
 import {User} from "./user.schema";
 import {Model} from "mongoose";
+import { JwtService } from '@nestjs/jwt';
+import { ConfigService } from '@nestjs/config';
+import * as bcrypt from 'bcrypt';
+import { CreateUserDto } from './dto/create-user.dto';
 
 @Injectable()
 export class UserService {
     constructor(
         @InjectModel(User.name) private readonly userModel: Model<User>,
-    ) {
-    }
+        private readonly jwtService: JwtService,
+        private readonly configService: ConfigService,
+    ) {}
 
     // 페이징 조회
     async findAllWithTotal(
@@ -46,6 +51,11 @@ export class UserService {
         if (existingByNickname) {
             throw new ConflictException('이미 존재하는 닉네임입니다.');
         }
+
+        const saltRounds = 10;
+        userData.password = await bcrypt.hash(userData.password, saltRounds);
+
+        console.log('[user.service] create', userData);
 
         const user = new this.userModel(userData);
         return user.save();
