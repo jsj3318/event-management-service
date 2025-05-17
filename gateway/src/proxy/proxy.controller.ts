@@ -3,6 +3,7 @@ import { Request, Response } from 'express';
 import axios from 'axios';
 import {AccessGuard} from "../middleware/access-guard";
 import {JwtAuthGuard} from "../middleware/jwt-auth-guard";
+import * as process from "node:process";
 
 const AUTH_SERVER_URL = process.env.AUTH_SERVER_URL || 'http://localhost:3100';
 const EVENT_SERVER_URL = process.env.EVENT_SERVER_URL || 'http://localhost:3200';
@@ -35,7 +36,9 @@ export class ProxyController {
                 config.data = req.body;
             }
 
-            console.log('[ProxyController] proxy', config);
+            // console.log('[ProxyController] proxy', config);
+
+            config.headers['x-gateway-auth'] = process.env.GATEWAY_SECRET_HEADER || '';
 
             const response = await axios(config);
             res.status(response.status).json(response.data);
