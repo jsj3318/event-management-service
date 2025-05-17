@@ -10,6 +10,9 @@ export const ACCESS_RULES = [
     { method: 'GET', path: /^\/auth\/user\/[^\/]+$/, roles: [] },
     { method: 'POST', path: /^\/auth\/user$/, roles: [] },
 
+    { method: 'POST', path: /^\/auth\/login$/, roles: [] },
+
+
     // event server
     { method: 'GET', path: /^\/event\/?$/, roles: [] },
 

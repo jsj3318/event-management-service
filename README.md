@@ -11,14 +11,6 @@
 * OPERATOR
 * ADMIN
 ---
-# JWT Payload
-```json
-{
- "userId": "6644f27b3e8397097ec512a1",
- "role": "ADMIN"
-}
-```
----
 # 권한 검증 구조
 
 고민한 검증 구조 후보들
@@ -69,4 +61,42 @@
 > 가장 큰 이유는 코드가 길어지거나 중복되는 것을 지양하기 때문에, 모든 요청을 한 번에 받아서 처리할 수 있는 프록시 컨트롤러가 매력적으로 느껴졌음.
 
 ---
+# Test Access Token
+테스트에 사용한 권한별 액세스 토큰 (만료시간 없음)
+
+USER - tmdwn3318@gmail.com
+`eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2ODI4MzEzMmI4NzI5NDgwN2VhODYxYjUiLCJlbWFpbCI6InRtZHduMzMxOEBnbWFpbC5jb20iLCJyb2xlIjoiVVNFUiIsImlhdCI6MTc0NzQ2NTI4MX0.v2V1htONCTjuqsy-AACtLUQqhur_wMDrycjRklS3oGE`
+
+AUDITOR - auditor@test
+`eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2ODI4MzRmZmI1NzQ5ZGMyYWJiODk3M2IiLCJlbWFpbCI6ImF1ZGl0b3JAdGVzdCIsInJvbGUiOiJBVURJVE9SIiwiaWF0IjoxNzQ3NDY1NjY2fQ.jcQKgN2OthJse5XHbCNpzehw14nA3L2R6O_CglSGKGE`
+
+OPERATOR - operator@test
+`eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2ODI4MzUwOWI1NzQ5ZGMyYWJiODk3M2YiLCJlbWFpbCI6Im9wZXJhdG9yQHRlc3QiLCJyb2xlIjoiT1BFUkFUT1IiLCJpYXQiOjE3NDc0NjU2OTF9.VnFpnwoVZbx88olj1YXGiwtNMXgdzuwk09YC2FyoYvw`
+
+ADMIN - admin@test
+`eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2ODI4MzUxMWI1NzQ5ZGMyYWJiODk3NDMiLCJlbWFpbCI6ImFkbWluQHRlc3QiLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NDc0NjU3MDd9.-vYeQwJ_gfIPCJPcbKcXU0737E-CT-NdqXhwMvOtneM`
+
+password: 1234
+
+## payload
+```json
+{
+  "sub": "68283132b87294807ea861b5",
+  "email": "tmdwn3318@gmail.com",
+  "role": "USER",
+  "iat": 1747465859,
+  "exp": 1747469459
+}
+```
+
+---
 # Gateway Server
+
+
+---
+# Auth Server
+
+
+---
+# Event Server
+

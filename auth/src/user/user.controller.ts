@@ -7,7 +7,9 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Get(':id')
-  async findById(@Param('id') id: string) {
+  async findById(
+      @Param('id') id: string
+  ) {
     return this.userService.findById(id);
   }
 
@@ -23,7 +25,9 @@ export class UserController {
   }
 
   @Post()
-  async create(@Body() userData: CreateUserDto) {
+  async create(
+      @Body() userData: CreateUserDto
+  ) {
     return this.userService.create(userData);
   }
 
