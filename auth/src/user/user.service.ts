@@ -27,7 +27,7 @@ export class UserService {
         const skip = (page - 1) * limit;
         const sortOption: Record<string, 1 | -1> = { [sortBy]: sortOrder === 'asc' ? 1 : -1 };
 
-        const query = this.userModel.find(filter).sort(sortOption).skip(skip).limit(limit);
+        const query = this.userModel.find(filter).sort(sortOption).skip(skip).limit(limit).select('-password');
         const [data, total] = await Promise.all([
             query.exec(),
             this.userModel.countDocuments(filter).exec(),
@@ -59,7 +59,9 @@ export class UserService {
         console.log('[user.service] create', userData);
 
         const user = new this.userModel(userData);
-        return user.save();
+        const savedUser = await user.save();
+        const { password, ...result } = savedUser.toObject();
+        return result;
     }
 
     // 로그인 요청
