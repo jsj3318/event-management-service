@@ -38,7 +38,7 @@ export class UserService {
 
     // _id 단건 조회
     async findById(id: string): Promise<User | null> {
-        return this.userModel.findById(id).exec();
+        return this.userModel.findById(id).select('-password').exec();
     }
 
     // 생성

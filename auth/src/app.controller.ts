@@ -1,7 +1,8 @@
-import {Body, Controller, Get, Post} from '@nestjs/common';
+import {Body, Controller, Get, Post, Req} from '@nestjs/common';
 import { AppService } from './app.service';
 import {LoginRequest} from "./user/dto/login-request.dto";
 import {UserService} from "./user/user.service";
+import {Request} from "express";
 
 @Controller('auth')
 export class AppController {
@@ -22,6 +23,15 @@ export class AppController {
       @Body()request: LoginRequest
   ) {
     return this.userService.login(request);
+  }
+
+  // 자신의 정보 반환
+  @Get('me')
+  async me(
+      @Req() req: Request
+  ) {
+    const userId = req.headers['x-user-id'] as string;
+    return this.userService.findById(userId);
   }
 
 
