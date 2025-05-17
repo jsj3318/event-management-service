@@ -3,7 +3,12 @@ import { Document } from 'mongoose';
 
 export type RewardDocument = Reward & Document;
 
-@Schema()
+@Schema(
+    {
+        collection: 'rewards',
+        timestamps: true,
+    }
+)
 export class Reward {
     // 필드 나중에 추가
 }

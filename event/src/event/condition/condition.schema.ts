@@ -3,7 +3,12 @@ import { Document } from 'mongoose';
 
 export type ConditionDocument = Condition & Document;
 
-@Schema()
+@Schema(
+    {
+        collection: 'conditions',
+        timestamps: true,
+    }
+)
 export class Condition {
     // 필드 나중에 추가
 }

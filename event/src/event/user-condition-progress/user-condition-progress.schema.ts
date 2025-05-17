@@ -3,7 +3,12 @@ import { Document } from 'mongoose';
 
 export type UserConditionProgressDocument = UserConditionProgress & Document;
 
-@Schema()
+@Schema(
+    {
+        collection: 'user_condition_progresses',
+        timestamps: true,
+    }
+)
 export class UserConditionProgress {
     // 필드 나중에 추가
 }

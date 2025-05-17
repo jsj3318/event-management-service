@@ -3,7 +3,12 @@ import { Document } from 'mongoose';
 
 export type EventDocument = Event & Document;
 
-@Schema()
+@Schema(
+    {
+        collection: 'events',
+        timestamps: true,
+    }
+)
 export class Event {
     @Prop({ required: true })
     title: string;
