@@ -14,6 +14,7 @@ export class ProxyController {
     @UseGuards(JwtAuthGuard, AccessGuard)
     @All('*')
     async proxy(@Req() req: Request, @Res() res: Response) {
+
         const target =
             req.path.startsWith('/auth') ? AUTH_SERVER_URL :
             req.path.startsWith('/event') ? EVENT_SERVER_URL :
@@ -24,21 +25,34 @@ export class ProxyController {
         const fullUrl = target + req.originalUrl;
 
         try {
-            const { host, ...headers } = req.headers;
-            headers['content-length'] = undefined;
+            // 헤더 설정
+            const headers = req.headers;
+
             const config: any = {
                 method: req.method,
                 url: fullUrl,
                 headers,
             };
 
+            const user = (req as { user?: any }).user;
+            // console.log('[ProxyController] req.user:', user);
+            if (user) {
+                headers['x-user-id'] = user.sub;
+                headers['x-user-role'] = user.role;
+            }
+
+            headers['x-gateway-auth'] = process.env.GATEWAY_SECRET_HEADER || '';
+
+            delete headers['authorization'];
+            delete headers['Authorization'];
+            delete headers['content-length'];
+
+            // 바디 설정
             if (!['GET', 'HEAD'].includes(req.method.toUpperCase())) {
                 config.data = req.body;
             }
 
-            // console.log('[ProxyController] proxy', config);
-
-            config.headers['x-gateway-auth'] = process.env.GATEWAY_SECRET_HEADER || '';
+            console.log('[ProxyController] proxy: config', config);
 
             const response = await axios(config);
             res.status(response.status).json(response.data);
