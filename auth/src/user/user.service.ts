@@ -60,8 +60,8 @@ export class UserService {
 
         const user = new this.userModel(userData);
         const savedUser = await user.save();
-        const { password, ...result } = savedUser.toObject();
-        return result;
+        savedUser.password = '****';
+        return savedUser;
     }
 
     // 로그인 요청
