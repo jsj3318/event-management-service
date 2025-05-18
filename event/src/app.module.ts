@@ -5,6 +5,7 @@ import {MongooseModule} from "@nestjs/mongoose";
 import * as process from "node:process";
 import {UserEventProgressModule} from "./event/user-event-progress/user-event-progress.module";
 import {RewardRequestModule} from "./event/reward-request/reward-request.module";
+import {RewardModule} from "./event/reward/reward.module";
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import {RewardRequestModule} from "./event/reward-request/reward-request.module"
 
       EventModule,
       UserEventProgressModule,
+      RewardModule,
       RewardRequestModule
   ],
 })

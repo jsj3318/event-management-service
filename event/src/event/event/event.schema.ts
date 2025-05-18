@@ -1,6 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
-import {RewardType} from "../../type/rewardType.enum";
 
 // 이벤트 조건 스키마
 class EventCondition {
@@ -14,23 +13,6 @@ class EventCondition {
 @Schema({ _id: false })
 class EventConditionSchema extends EventCondition {}
 
-// 이벤트 보상 스키마
-class EventReward {
-  @Prop({ type: String, enum: Object.values(RewardType), required: true })
-  type: RewardType;
-
-  @Prop({ required: true })
-  amount: number;
-
-  @Prop()
-  unit?: string;
-
-  @Prop()
-  itemId?: string;
-}
-
-@Schema({ _id: false })
-class EventRewardSchema extends EventReward {}
 
 export type EventDocument = Event & Document;
 
@@ -53,9 +35,6 @@ export class Event {
 
     @Prop({ type: [EventConditionSchema], default: [] })
     conditions: EventCondition[];
-
-    @Prop({ type: [EventRewardSchema], default: [] })
-    rewards: EventReward[];
 
     @Prop({ required: true })
     startAt: Date;
