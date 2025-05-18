@@ -1,6 +1,4 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import {ConfigModule} from "@nestjs/config";
 import { EventModule } from './event/event/event.module';
 import {MongooseModule} from "@nestjs/mongoose";
@@ -19,7 +17,5 @@ import {RewardRequestModule} from "./event/reward-request/reward-request.module"
       UserEventProgressModule,
       RewardRequestModule
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {}

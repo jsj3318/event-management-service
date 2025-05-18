@@ -4,7 +4,7 @@ import {LoginRequest} from "./user/dto/login-request.dto";
 import {UserService} from "./user/user.service";
 import {Request} from "express";
 
-@Controller('auth')
+@Controller('api/auth')
 export class AppController {
   constructor(
       private readonly appService: AppService,

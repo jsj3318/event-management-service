@@ -27,7 +27,14 @@ export class UserService {
         const skip = (page - 1) * limit;
         const sortOption: Record<string, 1 | -1> = { [sortBy]: sortOrder === 'asc' ? 1 : -1 };
 
-        const query = this.userModel.find(filter).sort(sortOption).skip(skip).limit(limit).select('-password');
+        const query =
+            this.userModel
+                .find(filter)
+                .sort(sortOption)
+                .skip(skip)
+                .limit(limit)
+                .select('-password');
+
         const [data, total] = await Promise.all([
             query.exec(),
             this.userModel.countDocuments(filter).exec(),

@@ -8,16 +8,16 @@ import * as process from "node:process";
 const AUTH_SERVER_URL = process.env.AUTH_SERVER_URL || 'http://localhost:3100';
 const EVENT_SERVER_URL = process.env.EVENT_SERVER_URL || 'http://localhost:3200';
 
-@Controller(['auth', 'event'])
+@Controller('api')
 export class ProxyController {
 
     @UseGuards(JwtAuthGuard, AccessGuard)
-    @All('*')
+    @All(['auth', 'auth/*', 'event', 'event/*'])
     async proxy(@Req() req: Request, @Res() res: Response) {
 
         const target =
-            req.path.startsWith('/auth') ? AUTH_SERVER_URL :
-            req.path.startsWith('/event') ? EVENT_SERVER_URL :
+            req.path.startsWith('/api/auth') ? AUTH_SERVER_URL :
+            req.path.startsWith('/api/event') ? EVENT_SERVER_URL :
             null;
 
         if (!target) return res.status(404).send('Target not found');
