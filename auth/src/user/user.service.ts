@@ -17,7 +17,7 @@ export class UserService {
     ) {}
 
     // 페이징 조회
-    async findAllWithTotal(
+    async findAll(
         page = 1,
         limit = 10,
         sortBy: string = 'createdAt',

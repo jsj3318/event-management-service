@@ -21,7 +21,7 @@ export class UserController {
     @Query('sortOrder') sortOrder?: 'asc' | 'desc',
     @Query() filters?: any,
   ) {
-    return this.userService.findAllWithTotal(page, limit, sortBy, sortOrder, filters);
+    return this.userService.findAll(page, limit, sortBy, sortOrder, filters);
   }
 
   @Post()
