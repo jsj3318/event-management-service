@@ -20,9 +20,13 @@ export const ACCESS_RULES = [
     { method: 'GET', path: /^\/api\/event\/[^\/]+$/, roles: [] },
     { method: 'POST', path: /^\/api\/event$/, roles: [Role.OPERATOR] },
 
+    // 보상
     { method: 'GET', path: /^\/api\/event\/[^\/]+\/reward$/, roles: [] },
     { method: 'POST', path: /^\/api\/event\/[^\/]+\/reward$/, roles: [Role.OPERATOR] },
     { method: 'DELETE', path: /^\/api\/event\/[^\/]+\/reward\/[^\/]+$/, roles: [Role.OPERATOR] },
 
+    // 진행도
+    { method: 'GET', path: /^\/api\/event\/[^\/]+\/user\/[^\/]+\/progress$/, roles: [Role.USER] },
+    { method: 'PATCH', path: /^\/api\/event\/[^\/]+\/user\/[^\/]+\/progress$/, roles: [] },
 
 ];

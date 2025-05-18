@@ -14,6 +14,10 @@ export class AccessGuard implements CanActivate {
         const req = context.switchToHttp().getRequest();
         const { method, path, user } = req;
 
+        console.log('method', method);
+        console.log('path', path);
+        console.log('user', user);
+
         const matched = ACCESS_RULES.find(
             (rule) => rule.method === method && rule.path.test(path),
         );
