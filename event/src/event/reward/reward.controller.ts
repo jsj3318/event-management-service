@@ -1,5 +1,5 @@
 import {Controller, Get, Post, Body, Param, Delete, HttpCode, Patch} from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiResponse, ApiBody, ApiParam } from '@nestjs/swagger';
+import {ApiTags, ApiOperation, ApiResponse, ApiBody, ApiParam, ApiBearerAuth} from '@nestjs/swagger';
 import { RewardService } from './reward.service';
 import { CreateRewardDto } from './dto/create-reward.dto';
 import {PartialType} from "@nestjs/mapped-types";
@@ -15,6 +15,7 @@ export class RewardController {
   @ApiResponse({ status: 201, description: '보상 생성 완료' })
   @ApiResponse({ status: 404, description: '이벤트 없음' })
   @ApiBody({ type: CreateRewardDto })
+  @ApiBearerAuth()
   @Post()
   create(
       @Param('eventId') eventId: string,
@@ -38,6 +39,7 @@ export class RewardController {
   @ApiResponse({ status: 404, description: '보상 없음' })
   @ApiResponse({ status: 400, description: '보상-이벤트 매치 안됨' })
   @HttpCode(204)
+  @ApiBearerAuth()
   @Delete(':id')
   deleteById(
       @Param('eventId') eventId: string,
@@ -60,6 +62,7 @@ export class RewardController {
       },
     }
   })
+  @ApiBearerAuth()
   @Patch(':id')
   updateById(
       @Param('eventId') eventId: string,

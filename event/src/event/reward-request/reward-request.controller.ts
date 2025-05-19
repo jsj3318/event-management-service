@@ -2,7 +2,7 @@ import {Controller, Get, Query} from '@nestjs/common';
 import { RewardRequestService } from './reward-request.service';
 import { Post, Req, Param } from '@nestjs/common';
 import { Request } from 'express';
-import { ApiTags, ApiOperation, ApiResponse, ApiQuery, ApiParam, ApiHeader } from '@nestjs/swagger';
+import {ApiTags, ApiOperation, ApiResponse, ApiQuery, ApiParam, ApiHeader, ApiBearerAuth} from '@nestjs/swagger';
 
 @ApiTags('Reward Request')
 @Controller('api/event/:eventId/reward-request')
@@ -12,6 +12,7 @@ export class RewardRequestController {
   @ApiOperation({ summary: '보상 요청' })
   @ApiResponse({ status: 201, description: '보상 요청 완료' })
   @ApiResponse({ status: 400, description: '이벤트가 진행중이지 않거나, 이미 보상 받은 이벤트일 경우' })
+  @ApiBearerAuth()
   @Post()
   async requestReward(
       @Req() req: Request,
@@ -30,6 +31,7 @@ export class RewardRequestController {
   @ApiQuery({ name: 'sortBy', required: false })
   @ApiQuery({ name: 'sortOrder', required: false, enum: ['asc', 'desc'] })
   @ApiQuery({ name: 'isSuccess', required: false, type: Boolean })
+  @ApiBearerAuth()
   @Get('me')
   async getMyRewardRequests(
       @Req() req: Request,
@@ -66,6 +68,7 @@ export class RewardRequestController {
   @ApiQuery({ name: 'sortOrder', required: false, enum: ['asc', 'desc'] })
   @ApiQuery({ name: 'userId', required: false })
   @ApiQuery({ name: 'isSuccess', required: false, type: Boolean })
+  @ApiBearerAuth()
   @Get()
   async getRewardRequestsForAdmin(
       @Param('eventId') eventId: string,
