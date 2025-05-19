@@ -6,13 +6,12 @@ import {ApiBearerAuth, ApiBody, ApiOperation, ApiQuery, ApiResponse, ApiTags} fr
 
 export class UpdateEventDto extends PartialType(CreateEventDto) {}
 
-@ApiTags('event')
+@ApiTags('Event')
 @Controller('api/event')
 export class EventController {
     constructor(private readonly eventService: EventService) {
     }
 
-    @Get()
     @ApiOperation({summary: '이벤트 페이지 조회'})
     @ApiQuery({ name: 'page', required: false, description: '페이지 번호' })
     @ApiQuery({ name: 'size', required: false, description: '페이지당 항목 수' })
@@ -22,6 +21,7 @@ export class EventController {
     @ApiQuery({ name: 'type', required: false, description: '이벤트 타입' })
     @ApiQuery({ name: 'isActive', required: false, description: '활성 여부', type: 'boolean' })
     @ApiResponse({ status: 200, description: '이벤트 페이지 조회 성공' })
+    @Get()
     findAll(
         @Query('page') page?: number,
         @Query('size') size?: number,
@@ -32,26 +32,26 @@ export class EventController {
         return this.eventService.findAll(page, size, sortBy, sortOrder, filters);
     }
 
-    @Get(':id')
     @ApiOperation({summary: '이벤트 단건 조회'})
     @ApiResponse({ status: 200, description: '이벤트 단건 조회 성공' })
+    @ApiResponse({ status: 404, description: '이벤트 없음' })
+    @Get(':id')
     async findById(
         @Param('id') id: string,
     ) {
         return this.eventService.findById(id);
     }
 
-    @Post()
     @ApiOperation({summary: '이벤트 생성'})
     @ApiResponse({ status: 200, description: '이벤트 생성 완료' })
     @ApiBearerAuth()
+    @Post()
     async create(
         @Body() eventData: CreateEventDto,
     ) {
         return this.eventService.create(eventData);
     }
 
-    @Patch(':id')
     @ApiOperation({summary: '이벤트 수정'})
     @ApiResponse({ status: 200, description: '이벤트 수정 완료' })
     @ApiResponse({ status: 404, description: '이벤트 없음' })
@@ -67,6 +67,7 @@ export class EventController {
         }
     })
     @ApiBearerAuth()
+    @Patch(':id')
     async update(
         @Param('id') id: string,
         @Body() updateEventDto: UpdateEventDto

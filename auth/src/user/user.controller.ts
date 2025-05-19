@@ -1,25 +1,25 @@
-import {Controller, Get, Param, Query, Post, Body, HttpCode} from '@nestjs/common';
+import {Controller, Get, Param, Query, Post, Body} from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import {ApiBearerAuth, ApiOperation, ApiQuery, ApiResponse, ApiTags} from "@nestjs/swagger";
 import {Role} from "../type/role.enum";
 
-@ApiTags('user')
+@ApiTags('User')
 @Controller('api/auth/user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Get(':id')
   @ApiOperation({summary: '유저 단건 조회'})
   @ApiResponse({ status: 200, description: '유저 정보 반환 완료' })
+  @ApiResponse({ status: 404, description: '유저 없음' })
   @ApiBearerAuth()
+  @Get(':id')
   async findById(
       @Param('id') id: string
   ) {
     return this.userService.findById(id);
   }
 
-  @Get()
   @ApiOperation({summary: '유저 페이지 조회'})
   @ApiQuery({ name: 'page', required: false, description: '페이지 번호' })
   @ApiQuery({ name: 'size', required: false, description: '페이지당 항목 수' })
@@ -30,6 +30,7 @@ export class UserController {
   @ApiQuery({ name: 'nickname', required: false, description: '닉네임' })
   @ApiBearerAuth()
   @ApiResponse({ status: 200, description: '유저 정보 페이지 반환 완료' })
+  @Get()
   async findAll(
     @Query('page') page?: number,
     @Query('size') size?: number,
@@ -40,10 +41,10 @@ export class UserController {
     return this.userService.findAll(page, size, sortBy, sortOrder, filters);
   }
 
-  @Post()
   @ApiOperation({summary: '유저 등록'})
   @ApiResponse({ status: 201, description: '회원가입 완료' })
   @ApiResponse({ status: 409, description: '이메일 또는 닉네임 중복' })
+  @Post()
   async create(
       @Body() userData: CreateUserDto
   ) {

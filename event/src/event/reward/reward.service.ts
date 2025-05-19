@@ -3,16 +3,21 @@ import { CreateRewardDto } from './dto/create-reward.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import {Reward, RewardDocument} from "./reward.schema";
+import { EventService } from '../event/event.service';
 
 @Injectable()
 export class RewardService {
   constructor(
       @InjectModel(Reward.name)
       private readonly rewardModel: Model<RewardDocument>,
+      private readonly eventService: EventService,
   ) {
   }
 
   async create(eventId: string, createRewardDto: CreateRewardDto): Promise<Reward> {
+    // 존재 검증
+    await this.eventService.findById(eventId);
+
     const created = new this.rewardModel({
       ...createRewardDto,
       eventId,
@@ -21,6 +26,9 @@ export class RewardService {
   }
 
   async findAll(eventId: string): Promise<Reward[]> {
+    // 존재 검증
+    await this.eventService.findById(eventId);
+
     return this.rewardModel.find({eventId});
   }
 
@@ -36,6 +44,9 @@ export class RewardService {
   }
 
   async update(eventId: string, id: string, updateRewardDto: Partial<CreateRewardDto>): Promise<Reward> {
+    // 존재 검증
+    await this.eventService.findById(eventId);
+
     const updated = await this.rewardModel.findOneAndUpdate(
         { _id: id, eventId },
         { $set: updateRewardDto },

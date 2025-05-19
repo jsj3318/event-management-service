@@ -4,7 +4,7 @@ import {UserService} from "./user/user.service";
 import {Request} from "express";
 import {ApiBearerAuth, ApiOperation, ApiResponse, ApiTags} from "@nestjs/swagger";
 
-@ApiTags('auth')
+@ApiTags('Auth')
 @Controller('api/auth')
 export class AppController {
   constructor(
@@ -13,11 +13,11 @@ export class AppController {
 
   // 로그인 요청
   // jwt 토큰 반환
-  @Post('login')
   @HttpCode(200)
   @ApiOperation({summary: '로그인 요청'})
   @ApiResponse({ status: 200, description: '로그인 성공' })
   @ApiResponse({ status: 401, description: '없는 이메일, 패스워드 불일치' })
+  @Post('login')
   async login(
       @Body()request: LoginRequest
   ) {
@@ -25,10 +25,10 @@ export class AppController {
   }
 
   // 자신의 정보 반환
-  @Get('me')
   @ApiOperation({summary: '내 정보 조회'})
   @ApiResponse({ status: 200, description: '내 정보 조회 성공' })
   @ApiBearerAuth()
+  @Get('me')
   async me(
       @Req() req: Request
   ) {

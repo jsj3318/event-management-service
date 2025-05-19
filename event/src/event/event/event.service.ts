@@ -16,8 +16,12 @@ export class EventService {
     return createdEvent.save();
   }
 
-  async findById(id: string): Promise<Event | null> {
-    return this.eventModel.findById(id).exec();
+  async findById(id: string): Promise<Event> {
+    const event = await this.eventModel.findById(id).exec();
+    if (!event) {
+      throw new NotFoundException('해당 이벤트를 찾을 수 없습니다');
+    }
+    return event;
   }
 
   async findAll(

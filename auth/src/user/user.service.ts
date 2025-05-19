@@ -1,4 +1,4 @@
-import { Injectable, ConflictException, UnauthorizedException } from '@nestjs/common';
+import { Injectable, ConflictException, UnauthorizedException, NotFoundException } from '@nestjs/common';
 import {InjectModel} from "@nestjs/mongoose";
 import {User} from "./user.schema";
 import {Model} from "mongoose";
@@ -45,7 +45,11 @@ export class UserService {
 
     // _id 단건 조회
     async findById(id: string): Promise<User | null> {
-        return this.userModel.findById(id).select('-password').exec();
+        const user = await this.userModel.findById(id).select('-password').exec();
+        if (!user) {
+            throw new NotFoundException('유저를 찾을 수 없습니다.');
+        }
+        return user;
     }
 
     // 생성
