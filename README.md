@@ -8,6 +8,7 @@
 3. 도커 종료 `docker-compose down -v`
 
 ---
+
 # api
 ### swagger api 문서
 
@@ -16,18 +17,23 @@ auth 서버 http://localhost:3100/api
 event 서버 http://localhost:3200/api
 
 ---
+
 ## 서버 포트
 * gateway server: 3000
 * auth server: 3100
 * event server: 3200
 * mongo db: 27017
+
 ---
+
 # 권한
 * USER
 * AUDITOR
 * OPERATOR
 * ADMIN
+
 ---
+
 # Test Access Token
 테스트에 사용 가능한 권한별 액세스 토큰 (만료시간 없음)
 
@@ -57,6 +63,7 @@ ADMIN - admin@test.com
 ```
 
 ---
+
 # 권한 검증 구조
 
 고민한 검증 구조 후보들
@@ -107,6 +114,7 @@ ADMIN - admin@test.com
 > 가장 큰 이유는 코드가 길어지거나 중복되는 것을 지양하기 때문에, 모든 요청을 한 번에 받아서 처리할 수 있는 프록시 컨트롤러가 매력적으로 느껴졌음.
 
 ---
+
 # Gateway Server
 모든 요청을 받아서 auth 서버나 event 서버로 연결 해주는 라우터 역할
 [access_rules](./gateway/src/middleware/access_rules.ts)에 미리 정의해 둔 api 별 접근 권한으로 헤더의 Jwt 토큰을 파싱한 결과와 비교
@@ -117,6 +125,7 @@ ADMIN - admin@test.com
 5. 필요한 권한이 없을 경우 403
 
 ---
+
 # Auth Server
 user 스키마를 관리하고, 로그인 요청을 받아 액세스 토큰을 발급해주는 역할
 * 로그인 요청 시 jwt 액세스 토큰 발급 (1시간)
@@ -124,6 +133,7 @@ user 스키마를 관리하고, 로그인 요청을 받아 액세스 토큰을 �
 * 유저 등록, 조회 (단건, 페이지)
 
 ---
+
 # Event Server
 이벤트 관련 스키마들을 관리하고, 유저 별 이벤트 진척도 관리, 유저 보상 요청 처리 역할
 
@@ -149,6 +159,7 @@ user 스키마를 관리하고, 로그인 요청을 받아 액세스 토큰을 �
 * 요청 목록 조회 (auditor, operator, admin) - 페이지, 필터 가능
 
 ---
+
 ### 시간 나면 해보고 싶은 것
 
 - 리프레쉬 토큰
