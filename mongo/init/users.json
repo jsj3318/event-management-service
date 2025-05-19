@@ -1,5 +1,6 @@
 [
   {
+    "_id": { "$oid": "68283132b87294807ea861b5" },
     "email": "user@test.com",
     "password": "$2b$10$maQOzM.jHY5h56eQWSiYOefE2/j2bUdfQC3aqGNGdS78EnNOBXxjC",
     "role": "USER",
@@ -7,6 +8,7 @@
     "createdAt": "2025-05-19T12:00:00Z"
   },
   {
+    "_id": { "$oid": "682834ffb5749dc2abb8973b" },
     "email": "auditor@test.com",
     "password": "$2b$10$maQOzM.jHY5h56eQWSiYOefE2/j2bUdfQC3aqGNGdS78EnNOBXxjC",
     "role": "AUDITOR",
@@ -14,6 +16,7 @@
     "createdAt": "2025-05-19T12:00:00Z"
   },
   {
+    "_id": { "$oid": "68283509b5749dc2abb8973f" },
     "email": "operator@test.com",
     "password": "$2b$10$maQOzM.jHY5h56eQWSiYOefE2/j2bUdfQC3aqGNGdS78EnNOBXxjC",
     "role": "OPERATOR",
@@ -21,6 +24,7 @@
     "createdAt": "2025-05-19T12:00:00Z"
   },
   {
+    "_id": { "$oid": "68283511b5749dc2abb89743" },
     "email": "admin@test.com",
     "password": "$2b$10$maQOzM.jHY5h56eQWSiYOefE2/j2bUdfQC3aqGNGdS78EnNOBXxjC",
     "role": "ADMIN",
