@@ -1,9 +1,8 @@
 import {Body, Controller, Get, HttpCode, Post, Req} from '@nestjs/common';
-import { AppService } from './app.service';
 import {LoginRequest} from "./user/dto/login-request.dto";
 import {UserService} from "./user/user.service";
 import {Request} from "express";
-import {ApiOperation, ApiResponse, ApiTags} from "@nestjs/swagger";
+import {ApiBearerAuth, ApiOperation, ApiResponse, ApiTags} from "@nestjs/swagger";
 
 @ApiTags('auth')
 @Controller('api/auth')
@@ -29,6 +28,7 @@ export class AppController {
   @Get('me')
   @ApiOperation({summary: '내 정보 조회'})
   @ApiResponse({ status: 200, description: '내 정보 조회 성공' })
+  @ApiBearerAuth()
   async me(
       @Req() req: Request
   ) {

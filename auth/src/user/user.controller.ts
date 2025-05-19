@@ -1,7 +1,8 @@
 import {Controller, Get, Param, Query, Post, Body, HttpCode} from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
-import {ApiOperation, ApiQuery, ApiResponse, ApiTags} from "@nestjs/swagger";
+import {ApiBearerAuth, ApiOperation, ApiQuery, ApiResponse, ApiTags} from "@nestjs/swagger";
+import {Role} from "../type/role.enum";
 
 @ApiTags('user')
 @Controller('api/auth/user')
@@ -11,6 +12,7 @@ export class UserController {
   @Get(':id')
   @ApiOperation({summary: '유저 단건 조회'})
   @ApiResponse({ status: 200, description: '유저 정보 반환 완료' })
+  @ApiBearerAuth()
   async findById(
       @Param('id') id: string
   ) {
@@ -23,6 +25,10 @@ export class UserController {
   @ApiQuery({ name: 'size', required: false, description: '페이지당 항목 수' })
   @ApiQuery({ name: 'sortBy', required: false, description: '정렬 기준 필드' })
   @ApiQuery({ name: 'sortOrder', required: false, enum: ['asc', 'desc'], description: '정렬 순서' })
+  @ApiQuery({ name: 'email', required: false, description: '이메일' })
+  @ApiQuery({ name: 'role', required: false, description: '권한', enum: Role })
+  @ApiQuery({ name: 'nickname', required: false, description: '닉네임' })
+  @ApiBearerAuth()
   @ApiResponse({ status: 200, description: '유저 정보 페이지 반환 완료' })
   async findAll(
     @Query('page') page?: number,
