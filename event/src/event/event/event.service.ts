@@ -48,7 +48,7 @@ export class EventService {
     if (!event) throw new NotFoundException('해당하는 이벤트가 존재하지 않습니다');
 
     const now = new Date();
-    return event.isActive && now < event.startAt || now > event.endAt;
+    return event.isActive && now >= event.startAt && now <= event.endAt;
   }
 
 }
