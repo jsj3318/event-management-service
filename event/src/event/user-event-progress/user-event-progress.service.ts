@@ -23,18 +23,13 @@ export class UserEventProgressService {
 
         // 존재하던 데이터가 없으면 기본 값으로 생성
         if (!progress) {
-            const event = await this.eventService.findById(eventId);
-            if (!event) throw new NotFoundException('해당하는 이벤트가 존재하지 않습니다');
 
-            // 진행중이고 활성화 된 이벤트인지 검사
-            if (event.isActive === false) {
-                throw new BadRequestException('이벤트가 활성 상태가 아닙니다');
-            }
-
-            const now = new Date();
-            if (now < event.startAt || now > event.endAt) {
+            const isActive = await this.eventService.isActive(eventId);
+            if (isActive === false) {
                 throw new BadRequestException('이벤트가 진행 중이 아닙니다');
             }
+
+            const event = await this.eventService.findById(eventId);
 
             progress = new this.userEventProgressModel({
                 userId,
@@ -67,5 +62,15 @@ export class UserEventProgressService {
         return progress;
     }
 
+    // 특정 유저의 특정 이벤트 진행도 완료 했는지 여부
+    async isCompleteEvent(userId: string, eventId: string): Promise<boolean> {
+        const progress = await this.userEventProgressModel.findOne({ userId, eventId });
+        if (!progress) {
+            throw new NotFoundException('해당 유저의 이벤트 진행도를 찾을 수 없습니다');
+        }
+
+        const isComplete = progress.conditionProgress.every(condition => condition.current >= condition.target);
+        return isComplete;
+    }
 
 }
