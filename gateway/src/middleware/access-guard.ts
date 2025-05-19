@@ -3,7 +3,7 @@ import {
     ExecutionContext,
     Injectable,
     NotFoundException,
-    ForbiddenException,
+    ForbiddenException, UnauthorizedException,
 } from '@nestjs/common';
 import { ACCESS_RULES } from './access_rules';
 import {Role} from "../type/role.enum";
@@ -32,9 +32,9 @@ export class AccessGuard implements CanActivate {
             return true;
         }
 
-        // 유저 정보 없으면 막기
+        // 유저 정보 없으면 401
         if (!user || !user.role) {
-            throw new ForbiddenException('로그인이 필요합니다');
+            throw new UnauthorizedException('로그인이 필요합니다');
         }
 
         // ADMIN은 무조건 통과
@@ -42,7 +42,7 @@ export class AccessGuard implements CanActivate {
             return true;
         }
 
-        // 권한 없는 경우
+        // 권한 없는 경우 403
         if (!matched.roles.includes(user.role)) {
             throw new ForbiddenException(
                 `접근 권한 없음`,

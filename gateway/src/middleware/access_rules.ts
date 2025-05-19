@@ -1,7 +1,7 @@
 import {Role} from "../type/role.enum";
 
 export const ACCESS_RULES = [
-    // ADMIN 은 accessGuard에서 통과
+    // ADMIN 은 accessGuard 에서 통과
 
     // auth server
     { method: 'GET', path: /^\/api\/auth$/, roles: [] },
