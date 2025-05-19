@@ -13,12 +13,12 @@ export class EventController {
     @Get()
     findAll(
         @Query('page') page?: number,
-        @Query('limit') limit?: number,
+        @Query('size') size?: number,
         @Query('sortBy') sortBy?: string,
         @Query('sortOrder') sortOrder?: 'asc' | 'desc',
         @Query() filters?: any,
     ) {
-        return this.eventService.findAll(page, limit, sortBy, sortOrder, filters);
+        return this.eventService.findAll(page, size, sortBy, sortOrder, filters);
     }
 
     @Get(':id')

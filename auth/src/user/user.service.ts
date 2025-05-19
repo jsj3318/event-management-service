@@ -19,12 +19,12 @@ export class UserService {
     // 페이징 조회
     async findAll(
         page = 1,
-        limit = 10,
+        size = 10,
         sortBy: string = 'createdAt',
         sortOrder: 'asc' | 'desc' = 'desc',
         filter: Partial<Record<keyof User, string>> = {},
     ): Promise<{ data: User[]; total: number }> {
-        const skip = (page - 1) * limit;
+        const skip = (page - 1) * size;
         const sortOption: Record<string, 1 | -1> = { [sortBy]: sortOrder === 'asc' ? 1 : -1 };
 
         const query =
@@ -32,7 +32,7 @@ export class UserService {
                 .find(filter)
                 .sort(sortOption)
                 .skip(skip)
-                .limit(limit)
+                .limit(size)
                 .select('-password');
 
         const [data, total] = await Promise.all([

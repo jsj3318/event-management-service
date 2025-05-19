@@ -1,24 +1,24 @@
-import {Body, Controller, Get, Post, Req} from '@nestjs/common';
+import {Body, Controller, Get, HttpCode, Post, Req} from '@nestjs/common';
 import { AppService } from './app.service';
 import {LoginRequest} from "./user/dto/login-request.dto";
 import {UserService} from "./user/user.service";
 import {Request} from "express";
+import {ApiOperation, ApiResponse, ApiTags} from "@nestjs/swagger";
 
+@ApiTags('auth')
 @Controller('api/auth')
 export class AppController {
   constructor(
-      private readonly appService: AppService,
       private readonly userService: UserService,
   ) {}
-
-  @Get()
-  getHello(): string {
-    return this.appService.getHello();
-  }
 
   // 로그인 요청
   // jwt 토큰 반환
   @Post('login')
+  @HttpCode(200)
+  @ApiOperation({summary: '로그인 요청'})
+  @ApiResponse({ status: 200, description: '로그인 성공' })
+  @ApiResponse({ status: 401, description: '없는 이메일, 패스워드 불일치' })
   async login(
       @Body()request: LoginRequest
   ) {
@@ -27,6 +27,8 @@ export class AppController {
 
   // 자신의 정보 반환
   @Get('me')
+  @ApiOperation({summary: '내 정보 조회'})
+  @ApiResponse({ status: 200, description: '내 정보 조회 성공' })
   async me(
       @Req() req: Request
   ) {
