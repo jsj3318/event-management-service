@@ -5,6 +5,7 @@ export class CreateUserDto {
 
   @ApiProperty({
     description: '이메일',
+    example: 'test@test.com',
   })
   @IsEmail()
   @IsNotEmpty()
@@ -12,6 +13,7 @@ export class CreateUserDto {
 
   @ApiProperty({
     description: '패스워드',
+    example: '1234',
   })
   @IsString()
   @IsNotEmpty()
@@ -19,6 +21,7 @@ export class CreateUserDto {
 
   @ApiProperty({
     description: '닉네임',
+    example: 'test',
   })
   @IsString()
   @IsNotEmpty()
