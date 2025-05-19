@@ -2,13 +2,13 @@ import {Injectable, BadRequestException, NotFoundException} from '@nestjs/common
 import { CreateRewardDto } from './dto/create-reward.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import {Reward} from "./reward.schema";
+import {Reward, RewardDocument} from "./reward.schema";
 
 @Injectable()
 export class RewardService {
   constructor(
     @InjectModel(Reward.name)
-    private readonly rewardModel: Model<Reward>,
+    private readonly rewardModel: Model<RewardDocument>,
   ) {}
 
   async create(eventId: string, createRewardDto: CreateRewardDto): Promise<Reward> {
