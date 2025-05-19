@@ -19,6 +19,7 @@ export const ACCESS_RULES = [
     { method: 'GET', path: /^\/api\/event$/, roles: [] },
     { method: 'GET', path: /^\/api\/event\/[^\/]+$/, roles: [] },
     { method: 'POST', path: /^\/api\/event$/, roles: [Role.OPERATOR] },
+    { method: 'PATCH', path: /^\/api\/event\/[^\/]+$/, roles: [Role.OPERATOR] },
 
     // 보상
     { method: 'GET', path: /^\/api\/event\/[^\/]+\/reward$/, roles: [] },

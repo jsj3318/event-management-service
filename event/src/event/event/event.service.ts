@@ -51,4 +51,20 @@ export class EventService {
     return event.isActive && now >= event.startAt && now <= event.endAt;
   }
 
+
+  async update(id: string, updateEventDto: Partial<CreateEventDto>): Promise<Event> {
+    const updatedEvent = await this.eventModel.findByIdAndUpdate(
+      id,
+      { $set: updateEventDto },
+      { new: true },
+    ).exec();
+
+    if (!updatedEvent) {
+      throw new NotFoundException('해당 이벤트를 찾을 수 없습니다');
+    }
+
+    return updatedEvent;
+  }
+
+
 }
