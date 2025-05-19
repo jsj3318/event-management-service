@@ -1,0 +1,18 @@
+[
+  {
+    "_id": { "$oid": "6829ab6d33fb88a0458a0cef" },
+    "title": "친구 초대 이벤트",
+    "type": "INVITE",
+    "description": "친구 3명 이상 초대 시 포인트 증정 이벤트",
+    "conditions": [
+      {
+        "type": "INVITE_COUNT",
+        "value": 3
+      }
+    ],
+    "startAt": "2025-05-20T00:00:00Z",
+    "endAt": "2025-06-20T00:00:00Z",
+    "createdAt": "2025-05-19T12:00:00Z",
+    "isActive": true
+  }
+]

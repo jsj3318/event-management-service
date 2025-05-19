@@ -1,0 +1,9 @@
+[
+  {
+    "type": "POINT",
+    "amount": 4000,
+    "eventId": {
+      "$oid": "6829ab6d33fb88a0458a0cef"
+    }
+  }
+]

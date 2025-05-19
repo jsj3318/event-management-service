@@ -1,0 +1,30 @@
+[
+  {
+    "email": "user@test.com",
+    "password": "$2b$10$maQOzM.jHY5h56eQWSiYOefE2/j2bUdfQC3aqGNGdS78EnNOBXxjC",
+    "role": "USER",
+    "nickname": "user",
+    "createdAt": "2025-05-19T12:00:00Z"
+  },
+  {
+    "email": "auditor@test.com",
+    "password": "$2b$10$maQOzM.jHY5h56eQWSiYOefE2/j2bUdfQC3aqGNGdS78EnNOBXxjC",
+    "role": "AUDITOR",
+    "nickname": "auditor",
+    "createdAt": "2025-05-19T12:00:00Z"
+  },
+  {
+    "email": "operator@test.com",
+    "password": "$2b$10$maQOzM.jHY5h56eQWSiYOefE2/j2bUdfQC3aqGNGdS78EnNOBXxjC",
+    "role": "OPERATOR",
+    "nickname": "operator",
+    "createdAt": "2025-05-19T12:00:00Z"
+  },
+  {
+    "email": "admin@test.com",
+    "password": "$2b$10$maQOzM.jHY5h56eQWSiYOefE2/j2bUdfQC3aqGNGdS78EnNOBXxjC",
+    "role": "ADMIN",
+    "nickname": "admin",
+    "createdAt": "2025-05-19T12:00:00Z"
+  }
+]
