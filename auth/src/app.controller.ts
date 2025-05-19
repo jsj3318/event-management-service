@@ -16,7 +16,8 @@ export class AppController {
   @HttpCode(200)
   @ApiOperation({summary: '로그인 요청'})
   @ApiResponse({ status: 200, description: '로그인 성공' })
-  @ApiResponse({ status: 401, description: '없는 이메일, 패스워드 불일치' })
+  @ApiResponse({ status: 404, description: '없는 이메일' })
+  @ApiResponse({ status: 401, description: '패스워드 불일치' })
   @Post('login')
   async login(
       @Body()request: LoginRequest

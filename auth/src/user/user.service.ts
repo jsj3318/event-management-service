@@ -79,7 +79,7 @@ export class UserService {
     async login(request: LoginRequest): Promise<{ accessToken: string }> {
         const user = await this.userModel.findOne({ email: request.email }).exec();
         if (!user) {
-            throw new UnauthorizedException('존재하지 않는 이메일입니다.');
+            throw new NotFoundException('존재하지 않는 이메일입니다.');
         }
 
         const isMatch = await bcrypt.compare(request.password, user.password);

@@ -5,7 +5,7 @@ export class LoginRequest {
 
   @ApiProperty({
     description: '이메일',
-    example: 'test@test.com',
+    example: 'user@test.com',
   })
   @IsEmail()
   @IsNotEmpty()
