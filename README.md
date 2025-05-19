@@ -2,7 +2,8 @@
 
 # 실행 방법
 1. 레포지토리 클론
-2. 루트 디렉토리 에서 (docker-compose.yml 있는 디렉토리) 도커 컴포즈 실행 `docker-compose up --build`
+2. 루트 디렉토리 에서 (docker-compose.yml 있는 디렉토리) 도커 컴포즈 실행 
+`docker-compose up --build` (몽고 db에 초기데이터 자동 삽입)
 3. 실행 후 아래 swagger 링크로 api 명세 확인 가능
 3. 도커 종료 `docker-compose down -v`
 
@@ -28,7 +29,7 @@ event 서버 http://localhost:3200/api
 * ADMIN
 ---
 # Test Access Token
-테스트에 사용한 권한별 액세스 토큰 (만료시간 없음)
+테스트에 사용 가능한 권한별 액세스 토큰 (만료시간 없음)
 
 USER - user@test.com
 `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2ODI4MzEzMmI4NzI5NDgwN2VhODYxYjUiLCJlbWFpbCI6InVzZXJAdGVzdC5jb20iLCJyb2xlIjoiVVNFUiIsImlhdCI6MTc0NzY0MjU4NH0.9oIk4aOr3fyv2B5jhukKFHLxlLmo_VIHKsok83w2YII`
@@ -42,16 +43,16 @@ OPERATOR - operator@test.com
 ADMIN - admin@test.com
 `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2ODI4MzUxMWI1NzQ5ZGMyYWJiODk3NDMiLCJlbWFpbCI6ImFkbWluQHRlc3QuY29tIiwicm9sZSI6IkFETUlOIiwiaWF0IjoxNzQ3NjQyNjE2fQ.IwUFSV84M4tAvnkO0RTXFSjag6UBM6YB9WvrbEnsL4M`
 
-password: 1234
+공통 패스워드 = 1234
 
 ## payload
 ```json
 {
   "sub": "68283132b87294807ea861b5",
-  "email": "tmdwn3318@gmail.com",
+  "email": "user@test.com",
   "role": "USER",
-  "iat": 1747465859,
-  "exp": 1747469459
+  "iat": 1747643183,
+  "exp": 1747646783
 }
 ```
 
@@ -107,18 +108,48 @@ password: 1234
 
 ---
 # Gateway Server
-
+모든 요청을 받아서 auth 서버나 event 서버로 연결 해주는 라우터 역할
+[access_rules](./gateway/src/middleware/access_rules.ts)에 미리 정의해 둔 api 별 접근 권한으로 헤더의 Jwt 토큰을 파싱한 결과와 비교
+1. api를 찾지 못하면 404
+2. 필요한 권한이 없는 api 일 경우 통과
+3. 인증 토큰이 없을 경우 401
+4. admin 일 경우 통과
+5. 필요한 권한이 없을 경우 403
 
 ---
 # Auth Server
-
+user 스키마를 관리하고, 로그인 요청을 받아 액세스 토큰을 발급해주는 역할
+* 로그인 요청 시 jwt 액세스 토큰 발급 (1시간)
+* 내 정보 조회 가능
+* 유저 등록, 조회 (단건, 페이지)
 
 ---
 # Event Server
+이벤트 관련 스키마들을 관리하고, 유저 별 이벤트 진척도 관리, 유저 보상 요청 처리 역할
 
+## 이벤트
+* 이벤트 생성 (operator, admin)
+* 이벤트 조회 (단건, 페이지)
+* 이벤트 수정 (부분 수정 가능)
+
+## 보상
+* 보상 생성, 수정, 삭제 (operator, admin)
+* 보상 조회 (이벤트 별)
+
+## 유저-이벤트 진행도
+* 유저-이벤트 진행도 조회 (로그인 필요)
+* 유저 이벤트 진행도 증가 (프론트가 생기면 프론트 시스템의 요청인지 검사 필요, 지금은 열려있음)
+  * 목표에 도달하면 증가 안함
+
+## 보상 요청
+* 보상 요청 (유저)
+  * 진행중인 이벤트인지, 이미 보상 받았는지 검사
+* 내 요청 내역 확인 (유저) - 페이지, 필터 가능
+* 요청 목록 조회 (auditor, operator, admin) - 페이지, 필터 가능
 
 ---
-## 시간 나면 해보고 싶은 포인트
+### 시간 나면 해보고 싶은 것
 
-- createdAt 쿼리 파라미터 필터를 일자만으로 필터
+- 리프레쉬 토큰
+- createdAt 쿼리 파라미터를 날짜만으로 필터
 - sortBy 정렬 쿼피 파라미터로 여러개의 정렬 조건 받기

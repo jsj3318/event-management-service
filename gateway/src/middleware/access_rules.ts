@@ -4,8 +4,6 @@ export const ACCESS_RULES = [
     // ADMIN 은 accessGuard 에서 통과
 
     // auth server
-    { method: 'GET', path: /^\/api\/auth$/, roles: [] },
-
     { method: 'GET', path: /^\/api\/auth\/me$/, roles: [Role.USER, Role.AUDITOR, Role.OPERATOR] },
     { method: 'POST', path: /^\/api\/auth\/login$/, roles: [] },
 
@@ -28,7 +26,7 @@ export const ACCESS_RULES = [
     { method: 'PATCH', path: /^\/api\/event\/[^\/]+\/reward\/[^\/]+$/, roles: [Role.OPERATOR] },
 
     // 진행도
-    { method: 'GET', path: /^\/api\/event\/[^\/]+\/user\/[^\/]+\/progress$/, roles: [Role.USER] },
+    { method: 'GET', path: /^\/api\/event\/[^\/]+\/user\/[^\/]+\/progress$/, roles: [Role.USER, Role.AUDITOR, Role.OPERATOR] },
     { method: 'PATCH', path: /^\/api\/event\/[^\/]+\/user\/[^\/]+\/progress$/, roles: [] },
 
     // 보상 요청
