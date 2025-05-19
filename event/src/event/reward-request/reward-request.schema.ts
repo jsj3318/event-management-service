@@ -17,9 +17,6 @@ export type RewardRequestDocument = RewardRequest & Document;
 
     @Prop({ required: true })
     isSuccess: boolean;
-
-    @Prop({ default: '' })
-    failureReason?: string;
 }
 
 export const RewardRequestSchema = SchemaFactory.createForClass(RewardRequest);
