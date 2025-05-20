@@ -37,5 +37,10 @@ export class AppController {
     return this.userService.findById(userId);
   }
 
+  @Get()
+  async getHello(): Promise<string> {
+    return 'Hello World!';
+  }
+
 
 }
