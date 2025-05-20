@@ -7,8 +7,8 @@ export const ACCESS_RULES = [
     { method: 'GET', path: /^\/api\/auth\/me$/, roles: [Role.USER, Role.AUDITOR, Role.OPERATOR] },
     { method: 'POST', path: /^\/api\/auth\/login$/, roles: [] },
 
-    { method: 'GET', path: /^\/api\/auth\/user$/, roles: [Role.USER, Role.AUDITOR, Role.OPERATOR] },
-    { method: 'GET', path: /^\/api\/auth\/user\/[^\/]+$/, roles: [Role.USER, Role.AUDITOR, Role.OPERATOR] },
+    { method: 'GET', path: /^\/api\/auth\/user$/, roles: [Role.AUDITOR, Role.OPERATOR] },
+    { method: 'GET', path: /^\/api\/auth\/user\/[^\/]+$/, roles: [Role.AUDITOR, Role.OPERATOR] },
     { method: 'POST', path: /^\/api\/auth\/user$/, roles: [] },
 
 
