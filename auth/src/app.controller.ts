@@ -2,7 +2,7 @@ import {Body, Controller, Get, HttpCode, Post, Req} from '@nestjs/common';
 import {LoginRequest} from "./user/dto/login-request.dto";
 import {UserService} from "./user/user.service";
 import {Request} from "express";
-import {ApiBearerAuth, ApiOperation, ApiResponse, ApiTags} from "@nestjs/swagger";
+import {ApiBearerAuth, ApiOperation, ApiResponse, ApiTags, ApiExcludeEndpoint} from "@nestjs/swagger";
 
 @ApiTags('Auth')
 @Controller('api/auth')
@@ -37,10 +37,10 @@ export class AppController {
     return this.userService.findById(userId);
   }
 
+  @ApiExcludeEndpoint()
   @Get()
   async getHello(): Promise<string> {
     return 'Hello World!';
   }
-
 
 }
